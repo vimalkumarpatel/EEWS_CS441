@@ -1,0 +1,1563 @@
+
+import cs441.eews.interfaces.*;
+import cs441.eews.entity.interfaces.*;
+import cs441.eews.*;
+import java.util.Date;
+import cs441.eews.entity.EpidemicProbability;
+
+global Date startdate;
+global Date enddate;
+
+rule "Rule1"
+	when
+		i : IRegion(country == "Algeria")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.427069908681;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+rule "Rule1a "
+  when
+     p: IPharmacy(medicineQuantity<100)
+     i : IRegion(country == "Algeria")
+then 
+     double EP=(p.getMedicineQuantity()+100)/10000;
+     EpidemicProbability.updateEP(p.getRegionID(),EP);
+     end
+
+
+
+
+
+
+
+  
+
+rule "Rule2"
+	when
+		i : IRegion(country == "Angola")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.0866114077361;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+rule "Rule2a"
+	when
+		p: IPharmacy(medicineQuantity > 10000)
+		i : IRegion(country == "Angola")
+	
+	then
+		double EP = p.getMedicineQuantity() / 100000;
+		// Enter Code to update global ep of region. This must also insert in database 
+		EpidemicProbability.updateEP(p.getRegionID(),EP);
+		System.out.println(p);
+end
+
+
+  
+rule "Rule3"
+	when
+		i : IRegion(country == "Benin")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.40750535933;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+rule "Rule3a"
+	when
+		p: IPharmacy(medicineQuantity < 100000)
+		i : IRegion(country == "Benin")
+	
+	then
+		double EP = p.getMedicineQuantity() / 1000000;
+		// Enter Code to update global ep of region. This must also insert in database 
+		EpidemicProbability.updateEP(p.getRegionID(),EP);
+		System.out.println(p);
+end
+
+
+
+
+  
+rule "Rule4"
+	when
+		i : IRegion(country == "Botswana")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.428522797648;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+rule "Rule4a"
+	when
+		p: IPharmacy(medicineQuantity > 200000)
+		i : IRegion(country == "Botswana")
+	
+	then
+		double EP = p.getMedicineQuantity() / 1000000;
+		// Enter Code to update global ep of region. This must also insert in database 
+		EpidemicProbability.updateEP(p.getRegionID(),EP);
+		System.out.println(p);
+end
+
+
+  
+
+rule "Rule5"
+	when
+		i : IRegion(country == "Burkina Faso")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.746975250813;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+rule "Rule5a"
+when
+     w: IWeather( recordDate > startdate && recordDate < enddate && minTemperature > 20)
+     i : IRegion(country == "Burkina Faso")
+then 
+     double EP= (w.getMinTemperature()+100)/10000;
+     EpidemicProbability.updateEP(w.getRegionID(),EP);
+     end
+
+
+
+rule "Rule6"
+	when
+		i : IRegion(country == "Burundi")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.340987807081;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+rule "Rule6a"
+when
+     w: IWeather( recordDate > startdate && recordDate < enddate && maxTemperature < 10)
+     i : IRegion(country == "Burundi")
+then 
+     double EP= (w.getAverageTemperature()+100)/10000;
+     EpidemicProbability.updateEP(w.getRegionID(),EP);
+     end
+
+
+
+rule "Rule7"
+	when
+		i : IRegion(country == "Cameroon")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.611249786951;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+rule "Rule7a"
+when
+     ho: IHealthOrganization(nDoctors < 100)
+     i : IRegion(country == "Cameroon")
+then 
+     double EP= (ho.getnDoctors())/10000;
+     EpidemicProbability.updateEP(ho.getRegionID(),EP);
+     end
+
+
+rule "Rule8"
+	when
+		i : IRegion(country == "Cape Verde")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.14834909139;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+rule "Rule8a"
+when
+     ho: IHealthOrganization(nStaff >50)
+     i : IRegion(country == "Cape Verde")
+then 
+     double EP= (ho.getnStaff())/10000;
+     EpidemicProbability.updateEP(ho.getRegionID(),EP);
+     end
+
+
+rule "Rule9"
+	when
+		i : IRegion(country == "Central African Republic")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.983371170262;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+rule "Rule9a"
+when
+     w: IWeather( recordDate > startdate && recordDate < enddate && maxTemperature < 30)
+     i : IRegion(country == "Central African Republic")
+then 
+     double EP= (w.getMaxTemperature()+100)/10000;
+     EpidemicProbability.updateEP(w.getRegionID(),EP);
+     end
+
+rule "Rule10"
+	when
+		i : IRegion(country == "Chad")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.12662946508;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+rule "Rule10a"
+     when
+        w: IWeather(recordDate > startdate && recordDate < enddate && humidity > 30)
+        i : IRegion(country == "Chad")
+  
+     then
+        double EP=w.getHumidity()+100/10000;
+        EpidemicProbability.updateEP(w.getRegionID(),EP);
+  end
+
+rule "Rule11"
+	when
+		i : IRegion(country == "Comoros")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.186108174909;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+rule "Rule11a"
+     when
+        w: IWeather(recordDate > startdate && recordDate < enddate && rainfall > 200)
+        i : IRegion(country == "Zambia")
+  
+     then
+        double EP=w.getRainfall()+100/10000;
+        EpidemicProbability.updateEP(w.getRegionID(),EP);
+  end
+
+rule "Rule12"
+	when
+		i : IRegion(country == "Congo")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.408148280566;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+rule "Rule12a"
+	when
+		ho: IHealthOrganization (nStaff > 50 )
+		i : IRegion(country == "Congo")
+	
+	then
+		double EP = ho.getnStaff() / 1000;
+		// Enter Code to update global ep of region. This must also insert in database 
+		EpidemicProbability.updateEP(ho.getRegionID(),EP);
+		System.out.println(ho);
+end
+
+
+rule "Rule13"
+	when
+		i : IRegion(country == "Congo Dem. Rep.")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.047251796867;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+rule "Rule13a"
+	when
+		ho: IHealthOrganization(nPatients < 20)
+		i : IRegion(country == "Congo Dem. Rep.")
+	
+	then
+		double EP = ho.getnPatients() / 1000;
+		// Enter Code to update global ep of region. This must also insert in database 
+		EpidemicProbability.updateEP(ho.getRegionID(),EP);
+		System.out.println(ho);
+end
+
+
+rule "Rule14"
+	when
+		i : IRegion(country == "Cote d Ivoire")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.570291506059;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+rule "Rule14a"
+	when
+		w: IWeather(recordDate > startdate && recordDate < enddate && humidity < 50)
+		i : IRegion(country == "Cote d Ivoire")
+	
+	then
+		double EP = (w.getHumidity()>30) ? 0.3 : 0.5; 	
+		EpidemicProbability.updateEP(w.getRegionID(),EP);
+		// Enter Code to update global ep of region. This must also insert in database	
+end
+rule "Rule15"
+	when
+		i : IRegion(country == "Djibouti")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.289664120653;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+  rule "Rule15a"
+     when
+        ho:IHealthOrganization(nPatients < 100 )
+        i : IRegion(country == "Djibouti")
+  
+     then
+        double EP=ho.getnPatients()/200;
+        EpidemicProbability.updateEP(ho.getRegionID(),EP);
+     end
+  
+  
+rule "Rule16"
+	when
+		i : IRegion(country == "Egypt")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.257484832847;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+ 
+  rule "Rule16a"
+     when
+        w: IWeather(recordDate > startdate && recordDate < enddate && maxTemperature > 30)
+        p: IPharmacy(medicineQuantity < 500000)
+        i : IRegion(country == "Egypt")
+  
+     then
+        double EP=w.getMaxTemperature()+100/10000;
+        EpidemicProbability.updateEP(w.getRegionID(),EP);
+  end
+  
+
+rule "Rule17"
+	when
+		i : IRegion(country == "Equatorial Guinea")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.285422380514;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+rule "Rule17a"
+	when
+		w: IWeather(recordDate > startdate && recordDate < enddate && minTemperature < 50)
+		i : IRegion(country == "Equatorial Guinea")
+	
+	then
+		double EP = (w.getAverageTemperature()>100) ? 0.3 : 0.5; 	
+		EpidemicProbability.updateEP(w.getRegionID(),EP);
+		// Enter Code to update global ep of region. This must also insert in database	
+end
+
+rule "Rule18"
+	when
+		i : IRegion(country == "Eritrea")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.152379424791;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+rule "Rule18a"
+when
+     w: IWeather( recordDate > startdate && recordDate < enddate && maxTemperature>20)
+     i : IRegion(country == "Eritrea")
+then 
+     double EP= (w.getMaxTemperature()+100)/10000;
+     EpidemicProbability.updateEP(w.getRegionID(),EP);
+     end
+
+rule "Rule19"
+	when
+		i : IRegion(country == "Ethiopia")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.712379967999;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+rule "Rule19a"
+     when
+        w: IWeather(recordDate > startdate && recordDate < enddate && humidity == 50)
+        i : IRegion(country == "Ethiopia")
+  
+     then
+        double EP=w.getHumidity()+100/10000;
+        EpidemicProbability.updateEP(w.getRegionID(),EP);
+  end
+  
+rule "Rule20"
+	when
+		i : IRegion(country == "Gabon")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.207606427289;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+rule "Rule20a"
+	when 
+		w: IWeather(recordDate > startdate && recordDate < enddate && averageTemperature > 25)
+		ho: IHealthOrganization(nPatients > 300)
+		i : IRegion(country == "Gabon")
+	then
+		double EP=((w.getAverageTemperature()/2000)+(ho.getnPatients()/2000));
+		EpidemicProbability.updateEP(w.getRegionID(),EP);
+end
+  
+
+
+rule "Rule21"
+	when
+		i : IRegion(country == "Gambia")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.354565232147;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+rule "Rule21a"
+  when
+  w: IWeather(recordDate > startdate && recordDate < enddate && rainfall >250)
+  ho: IHealthOrganization(nStaff < 100)
+  i : IRegion(country == "Gambia")
+  then
+  double EP=((w.getRainfall()/1000)-(ho.getnStaff()/1000));
+  EpidemicProbability.updateEP(w.getRegionID(),EP);
+  end  
+  
+rule "Rule22"
+	when
+		i : IRegion(country == "Ghana")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.0405578617557;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+rule "Rule22a"
+     when
+        w: IWeather(recordDate > startdate && recordDate < enddate && rainfall > 35)
+        i : IRegion(country == "Ghana")
+  
+     then
+        double EP=w.getRainfall()+100/10000;
+        EpidemicProbability.updateEP(w.getRegionID(),EP);
+  end
+  
+rule "Rule23"
+	when
+		i : IRegion(country == "Guinea")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.790575561597;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+rule "Rule23a"
+when
+     ho: IHealthOrganization(nDoctors < 50)
+     i : IRegion(country == "Guinea")
+then 
+     double EP= (ho.getnDoctors())/10000;
+     EpidemicProbability.updateEP(ho.getRegionID(),EP);
+     end
+
+rule "Rule24"
+	when
+		i : IRegion(country == "Kenya")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.80281013835;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+rule "Rule24a"
+when
+     ho: IHealthOrganization(nStaff < 175)
+     i : IRegion(country == "Kenya")
+then 
+     double EP= (ho.getnStaff())/10000;
+     EpidemicProbability.updateEP(ho.getRegionID(),EP);
+     end
+
+
+rule "Rule25"
+	when
+		i : IRegion(country == "Lesotho")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.695680067565;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+rule "Rule25a"
+	when
+		w: IWeather(recordDate > startdate && recordDate < enddate && minTemperature < 50)
+		i : IRegion(country == "Lesotho")
+	
+	then
+		double EP = (w.getAverageTemperature()>100) ? 0.6 : 0.8; 	
+		EpidemicProbability.updateEP(w.getRegionID(),EP);
+		// Enter Code to update global ep of region. This must also insert in database	
+end
+
+rule "Rule26"
+	when
+		i : IRegion(country == "Liberia")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.74320491676;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+rule "Rule26a"
+     when
+        w: IWeather( recordDate > startdate && recordDate < enddate && rainfall < 50)
+        i : IRegion(country == "Liberia")
+     then
+        double EP= w.getRainfall()/100 ;
+        EpidemicProbability.updateEP(w.getRegionID(),EP);
+  end
+  
+rule "Rule27"
+	when
+		i : IRegion(country == "Libya")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.586667277038;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+rule "Rule27a"
+	when
+		w: IWeather(recordDate > startdate && recordDate < enddate && rainfall < 250)
+		i : IRegion(country == "Libya")
+	
+	then
+		double EP = (w.getAverageTemperature()>100) ? 0.1 : 0.2; 	
+		EpidemicProbability.updateEP(w.getRegionID(),EP);
+		// Enter Code to update global ep of region. This must also insert in database	
+end
+
+rule "Rule28"
+	when
+		i : IRegion(country == "Madagascar")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.420935132417;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+rule "Rule28a"
+	when
+		w: IWeather(recordDate > startdate && recordDate < enddate && maxTemperature < 15)
+		i : IRegion(country == "Madagascar")
+	
+	then
+		double EP = (w.getAverageTemperature()>100) ? 0.3 : 0.5; 	
+		EpidemicProbability.updateEP(w.getRegionID(),EP);
+		// Enter Code to update global ep of region. This must also insert in database	
+end
+
+rule "Rule29"
+	when
+		i : IRegion(country == "Malawi")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.785994802357;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+rule "Rule29a"
+when
+     ho: IHealthOrganization(nPatients >300)
+     i : IRegion(country == "Cape Verde")
+then 
+     double EP= (ho.getnPatients())/10000;
+     EpidemicProbability.updateEP(ho.getRegionID(),EP);
+     end
+
+rule "Rule30"
+	when
+		i : IRegion(country == "Mali")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.42450769038;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+ rule "rule30a"
+  when
+  p: IPharmacy(medicineQuantity==0)
+  then
+  double EP= 0.9;
+  EpidemicProbability.updateEP(p.getRegionID(),EP);
+  end
+  
+rule "Rule31"
+	when
+		i : IRegion(country == "Mauritania")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.0813163480636;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+rule "Rule31a"
+when
+     ho: IHealthOrganization(nStaff < 150)
+     i : IRegion(country == "Mauritania")
+then 
+     double EP= (ho.getnStaff())/10000;
+     EpidemicProbability.updateEP(ho.getRegionID(),EP);
+     end
+     
+rule "Rule32"
+	when
+		i : IRegion(country == "Mauritius")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.897586378262;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+rule "Rule32a"
+  when 
+  w: IWeather(recordDate > startdate && recordDate < enddate && humidity >=75)
+  ho: IHealthOrganization(nDoctors < 100) 
+  i : IRegion(country == "Mauritius")
+   then
+   double EP=((w.getHumidity()/1000)+(ho.getnDoctors()/10000));
+   EpidemicProbability.updateEP(w.getRegionID(),EP);
+   end
+
+rule "Rule33"
+	when
+		i : IRegion(country == "Morocco")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.884753250865;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+rule "Rule33a"
+when
+     ho: IHealthOrganization(nDoctors < 40)
+     i : IRegion(country == "Morocco")
+then 
+     double EP= (ho.getnDoctors())/10000;
+     EpidemicProbability.updateEP(ho.getRegionID(),EP);
+     end
+
+rule "Rule34"
+	when
+		i : IRegion(country == "Mozambique")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.929828453948;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+rule "Rule34a"
+when
+     w: IWeather( recordDate > startdate && recordDate < enddate && rainfall==100)
+     i : IRegion(country == "Mozambique")
+then 
+     double EP= (w.getRainfall()+100)/10000;
+     EpidemicProbability.updateEP(w.getRegionID(),EP);
+     end
+rule "Rule35"
+	when
+		i : IRegion(country == "Namibia")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.815445948498;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+rule "Rule35a"
+when
+     w: IWeather( recordDate > startdate && recordDate < enddate && humidity==20)
+     i : IRegion(country == "Namibia")
+then 
+     double EP= (w.getHumidity()+100)/10000;
+     EpidemicProbability.updateEP(w.getRegionID(),EP);
+     end
+     
+rule "Rule36"
+	when
+		i : IRegion(country == "Niger")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.741909666117;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+rule "Rule36a"
+when
+     w: IWeather( recordDate > startdate && recordDate < enddate && maxTemperature ==12 )
+     i : IRegion(country == "Niger")
+then 
+     double EP= (w.getMaxTemperature()+100)/10000;
+     EpidemicProbability.updateEP(w.getRegionID(),EP);
+     end
+
+rule "Rule37"
+	when
+		i : IRegion(country == "Nigeria")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.990642610398;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+rule "Rule37a"
+     when
+        p: IPharmacy(medicineQuantity < 100)
+        i : IRegion(country == "Nigeria")
+     then
+        double EP= p.getMedicineQuantity()/500 ;
+        EpidemicProbability.updateEP(p.getRegionID(),EP);
+  end
+  
+rule "Rule38"
+	when
+		i : IRegion(country == "Sao Tome e Principe")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.0126076369231;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+rule "Rule38a "
+  when
+     p: IPharmacy(medicineQuantity > 50000)
+     i : IRegion(country == "Sao Tome e Principe")
+then 
+     double EP=(p.getMedicineQuantity()+100)/100000;
+     EpidemicProbability.updateEP(p.getRegionID(),EP);
+     end
+     
+rule "Rule39"
+	when
+		i : IRegion(country == "Senegal")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.512936322921;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+rule "Rule39a "
+  when
+     p: IPharmacy(medicineID > 3)
+     i : IRegion(country == "Seychelles")
+then 
+     double EP=(p.getMedicineID()+100)/100000;
+     EpidemicProbability.updateEP(p.getRegionID(),EP);
+     end
+
+rule "Rule40"
+	when
+		i : IRegion(country == "Seychelles")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.498558300576;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+
+rule "Rule40a "
+  when
+     p: IPharmacy(medicineQuantity > 10000)
+     i : IRegion(country == "Seychelles")
+then 
+     double EP=(p.getMedicineQuantity()+100)/100000;
+     EpidemicProbability.updateEP(p.getRegionID(),EP);
+     end
+
+rule "Rule41"
+	when
+		i : IRegion(country == "Somalia")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.910789630176;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+rule "Rule41a"
+
+	when 
+		w: IWeather(recordDate > startdate && recordDate < enddate && maxTemperature < 30)
+		ho: IHealthOrganization(nPatients > 100)
+		i : IRegion(country == "Somalia")
+	then
+		double EP=((w.getAverageTemperature()/2000)+(ho.getnPatients()/2000));
+		EpidemicProbability.updateEP(w.getRegionID(),EP);
+  end
+
+rule "Rule42"
+	when
+		i : IRegion(country == "South Africa")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.605494015813;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+rule "Rule42a"
+	when 
+		w: IWeather(recordDate > startdate && recordDate < enddate && rainfall > 250)
+		ho: IHealthOrganization(nStaff < 80)
+		i : IRegion(country == "South Africa")
+	then
+		double EP=((w.getRainfall()/2000)+(ho.getnStaff()/2000));
+		EpidemicProbability.updateEP(w.getRegionID(),EP);
+     end
+     
+rule "Rule43"
+	when
+		i : IRegion(country == "Sudan")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.529502972417;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+
+rule "Rule43a "
+  when
+     p: IPharmacy(medicineID < 3)
+     i : IRegion(country == "Sudan")
+then 
+     double EP=(p.getMedicineID()+100)/10000;
+     EpidemicProbability.updateEP(p.getRegionID(),EP);
+     end
+
+
+rule "Rule44"
+	when
+		i : IRegion(country == "Swaziland")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.09838659284;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+
+rule "Rule44a "
+  when
+     p: IPharmacy(medicineID == 1)
+     i : IRegion(country == "Swaziland")
+then 
+     double EP=(p.getMedicineID()+100)/10000;
+     EpidemicProbability.updateEP(p.getRegionID(),EP);
+     end
+
+rule "Rule45"
+	when
+		i : IRegion(country == "Tanzania")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.34929422778;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+
+rule "Rule45a "
+  when
+     p: IPharmacy(medicineQuantity<20000)
+     i : IRegion(country == "Tanzania")
+then 
+     double EP=(p.getMedicineQuantity()+100)/20000;
+     EpidemicProbability.updateEP(p.getRegionID(),EP);
+     end
+
+rule "Rule46"
+	when
+		i : IRegion(country == "Togo")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.554104024929;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+rule "Rule46a"
+	when
+		ho: IHealthOrganization(nStaff < 100)
+		i : IRegion(country == "Togo")
+	
+	then
+		double EP = ho.getnStaff() / 1000;
+		// Enter Code to update global ep of region. This must also insert in database 
+		EpidemicProbability.updateEP(ho.getRegionID(),EP);
+		System.out.println(ho);
+end
+
+
+
+rule "Rule47"
+	when
+		i : IRegion(country == "Tunisia")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.585981923927;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+rule "Rule47a"
+	when
+		ho: IHealthOrganization(nStaff < 20)
+		i : IRegion(country == "Tunisia")
+	
+	then
+		double EP = ho.getnStaff() / 1000;
+		// Enter Code to update global ep of region. This must also insert in database 
+		EpidemicProbability.updateEP(ho.getRegionID(),EP);
+		System.out.println(ho);
+end
+
+
+  
+rule "Rule48"
+	when
+		i : IRegion(country == "Ugand")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.319048443086;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+  rule "Rule48a"
+     when
+        w: IWeather(recordDate > startdate && recordDate < enddate && maxTemperature < 30)
+        p: IPharmacy(medicineQuantity < 500000)
+        i : IRegion(country == "Ugand")
+  
+     then
+        double EP=w.getMaxTemperature()+100/10000;
+        EpidemicProbability.updateEP(w.getRegionID(),EP);
+  end
+  
+  
+
+rule "Rule49"
+	when
+		i : IRegion(country == "Zambia")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.201114307477;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+
+  rule "Rule49a"
+     when
+        w: IWeather(recordDate > startdate && recordDate < enddate && humidity > 30)
+        i : IRegion(country == "Zambia")
+  
+     then
+        double EP=w.getHumidity()+100/10000;
+        EpidemicProbability.updateEP(w.getRegionID(),EP);
+  end
+  
+rule "Rule50"
+	when
+		i : IRegion(country == "Zimbawe")
+	then
+
+		IMySQLUtils utils = MySQLUtils.getSingleton();
+		int regionID = i.getRegionID();
+		IWeather[] weather = utils.getAllWeatherInfo(regionID);
+		IHealthOrganization[] hOrg = utils.getAllHealthOrganizations(regionID);
+		IPharmacy[] pharmacy = utils.getAllPharmacies(regionID);
+		for(IWeather w: weather)
+			insert(w);
+		for(IHealthOrganization ho : hOrg)
+			insert(ho);
+		for(IPharmacy p : pharmacy)
+			insert(p);
+		double EP = 0.874837175031;
+		EpidemicProbability.updateEP(i.getRegionID(),EP);
+end
+
+
+
+
+rule "Rule50a"
+	when
+		w: IWeather(recordDate > startdate && recordDate < enddate && minTemperature < 50)
+		i : IRegion(country == "zimbawe")
+	
+	then
+		double EP = (w.getAverageTemperature()>100) ? 0.3 : 0.5; 	
+		EpidemicProbability.updateEP(w.getRegionID(),EP);
+		// Enter Code to update global ep of region. This must also insert in database	
+end
+
+rule "Rule50b"
+	when
+		p: IPharmacy(medicineQuantity < 100000)
+		i : IRegion(country == "Zimbawe")
+	
+	then
+		double EP = p.getMedicineQuantity() / 1000000;
+		// Enter Code to update global ep of region. This must also insert in database 
+		EpidemicProbability.updateEP(p.getRegionID(),EP);
+		System.out.println(p);
+end
